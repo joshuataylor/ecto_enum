@@ -30,10 +30,6 @@ defmodule EctoEnum.Postgres.Use do
         def dump(unquote(string)), do: {:ok, unquote(string)}
       end
 
-      def embed_as(_), do: :self
-
-      def equal?(term1, term2), do: term1 == term2
-
       def dump(term) do
         msg =
           "Value `#{inspect(term)}` is not a valid enum for `#{inspect(__MODULE__)}`. " <>
