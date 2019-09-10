@@ -7,7 +7,7 @@ defmodule EctoEnum.Use do
     quote bind_quoted: [opts: opts] do
       typespec = Typespec.make(Keyword.keys(opts))
 
-      @behaviour Ecto.Type
+      use Ecto.Type
 
       @type t :: unquote(typespec)
 

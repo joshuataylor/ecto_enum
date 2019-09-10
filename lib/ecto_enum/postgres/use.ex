@@ -7,7 +7,7 @@ defmodule EctoEnum.Postgres.Use do
     quote bind_quoted: [input: input] do
       typespec = Typespec.make(input[:enums])
 
-      @behaviour Ecto.Type
+      use Ecto.Type
 
       @type t :: unquote(typespec)
 
