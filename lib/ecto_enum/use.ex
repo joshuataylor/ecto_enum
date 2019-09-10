@@ -7,7 +7,7 @@ defmodule EctoEnum.Use do
     quote bind_quoted: [opts: opts] do
       typespec = Typespec.make(Keyword.keys(opts))
 
-      use Ecto.Type
+      @behaviour Ecto.Type
 
       @type t :: unquote(typespec)
 
@@ -35,6 +35,10 @@ defmodule EctoEnum.Use do
       for {key, value} <- opts, k <- Enum.uniq([key, value, Atom.to_string(key)]) do
         def dump(unquote(k)), do: {:ok, unquote(value)}
       end
+
+      def embed_as(_), do: :self
+
+      def equal?(term1, term2), do: term1 == term2
 
       def dump(term) do
         msg =

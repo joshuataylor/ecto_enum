@@ -7,7 +7,7 @@ defmodule EctoEnum.Postgres.Use do
     quote bind_quoted: [input: input] do
       typespec = Typespec.make(input[:enums])
 
-      use Ecto.Type
+      @behaviour Ecto.Type
 
       @type t :: unquote(typespec)
 
@@ -29,6 +29,10 @@ defmodule EctoEnum.Postgres.Use do
         def dump(unquote(atom)), do: {:ok, unquote(string)}
         def dump(unquote(string)), do: {:ok, unquote(string)}
       end
+
+      def embed_as(_), do: :self
+
+      def equal?(term1, term2), do: term1 == term2
 
       def dump(term) do
         msg =
@@ -60,6 +64,9 @@ defmodule EctoEnum.Postgres.Use do
 
       def type, do: unquote(type)
       def schemaless_type, do: unquote(input[:type])
+      def embed_as(_), do: :self
+
+      def equal?(term1, term2), do: term1 == term2
 
       def schema, do: unquote(schema)
 
